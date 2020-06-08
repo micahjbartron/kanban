@@ -16,6 +16,7 @@ export class BoardsController extends BaseController {
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
+
   }
 
 

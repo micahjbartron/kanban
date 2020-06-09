@@ -14,7 +14,7 @@ export class BoardsController extends BaseController {
       .use(auth0provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       .get('/:id', this.getById)
-      .get('/:id/list', this.getListByBoardId)
+      .get('/:id/lists', this.getListByBoardId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
@@ -31,7 +31,7 @@ export class BoardsController extends BaseController {
   }
   async getListByBoardId(req, res, next) {
     try {
-      let data = await listService.find({ board: req.params.id })
+      let data = await listService.find({ boardId: req.params.id })
       return res.send(data)
     } catch (error) { next(error) }
   }

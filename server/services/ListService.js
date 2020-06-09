@@ -17,8 +17,9 @@ class ListService {
     let data = await dbContext.Lists.create(rawData)
     return data
   }
-  async find(arg0) {
-    throw new Error("Method not implemented.")
+  async find(query = {}) {
+    let list = await dbContext.Lists.find(query).populate("boards");
+    return list
   }
 
   async edit(id, userEmail, update) {
@@ -31,7 +32,7 @@ class ListService {
   async delete(id, userEmail) {
     let data = await dbContext.Lists.findOneAndRemove({ _id: id, creatorEmail: userEmail });
     if (!data) {
-      throw new BadRequest("inbalid ID or you do not own this List")
+      throw new BadRequest("Invalid ID or you do not own this List")
     }
   }
 

@@ -5,22 +5,34 @@ import { BadRequest } from "../utils/Errors"
 
 class TaskService {
   async getAll(userEmail) {
-    return await dbContext.Tasks.find({})
+    return await dbContext.Tasks.find({ creatorEmail: userEmail }).populate("creator", "name Picture")
   }
-  getById(id) {
-    throw new Error("Method not implemented.")
+  async getById(id, userEmail) {
+    let data = await dbContext.Tasks.findOne({ _id: id, creatorEmail: userEmail })
+    if (!data) {
+      throw new BadRequest("invalid ID or you don not own this board")
+    }
+    return data
   }
-  create(body) {
-    throw new Error("Method not implemented.")
+  async create(rawData) {
+    let data = await dbContext.Tasks.create(rawData)
+    return data
   }
-  edit(id, email, body) {
-    throw new Error("Method not implemented.")
+  async edit(id, userEmail, update) {
+    let data = await dbContext.Tasks.findOneAndUpdate({ _id: id, creatorEmail: userEmail }, update, { new: true })
+    if (!data) {
+      throw new BadRequest("Invalid ID or you do not won this list")
+    }
+    return data
   }
-  delete(id, email) {
-    throw new Error("Method not implemented.")
+  async delete(id, userEmail) {
+    let data = await dbContext.Tasks.findOneAndRemove({ _id: id, creatorEmail: userEmail });
+    if (!data)
+      throw new BadRequest("Invalid ID or you do not own this list")
   }
-  find(arg0) {
-    throw new Error("Method not implemented.")
+  async findByListId(Id) {
+    let task = await dbContext.Tasks.find({ listId: Id })
+    return task
   }
 
 

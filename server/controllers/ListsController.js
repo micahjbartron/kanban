@@ -1,7 +1,7 @@
 import express from 'express'
 import BaseController from "../utils/BaseController";
 import auth0provider from "@bcwdev/auth0provider";
-// import { taskService } from '../services/TaskService';
+import { taskService } from '../services/TaskService';
 import { listService } from '../services/ListService';
 
 
@@ -11,32 +11,35 @@ export class ListsController extends BaseController {
     super("api/lists")
     this.router
       .use(auth0provider.getAuthorizedUserInfo)
-      // .get('', this.getAll)
+      .get('', this.getAll)
       .get('/:id', this.getById)
-      // .get('/:id/task', this.getTasksByListId)
+      .get('/:id/tasks', this.getTasksByListId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
-  // async getAll(req, res, next) {
-  //   try {
-  //     let data = await listService.getAll(req.userInfo.email)
-  //     return res.send(data)
-  //   }
-  //   catch (err) { next(err) }
-  // }
+  async getAll(req, res, next) {
+    try {
+      let data = await listService.getAll(req.userInfo.email)
+      return res.send(data)
+    }
+    catch (err) { next(err) }
+  }
   async getById(req, res, next) {
     try {
-      let data = await listService.getById(req.params.id);
+      let data = await listService.getById(req.params.id, req.userInfo.email);
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+
+  }
+  async getTasksByListId(req, res, next) {
+    try {
+      let data = await taskService.findByListId(req.params.id)
       return res.send(data)
     } catch (error) { next(error) }
   }
-  // async getTasksByListId(req, res, next) {
-  //   try {
-  //     let data = await taskService.find({ list: req.params.id })
-  //     return res.send(data)
-  //   } catch (error) { next(error) }
-  // }
   async create(req, res, next) {
     try {
       req.body.creatorEmail = req.userInfo.email

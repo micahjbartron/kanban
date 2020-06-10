@@ -8,21 +8,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-4">
-        <div class="card" style="width: 18rem;">
-          <div class="card-header">{{lists.title}}</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-        </div>
-      </div>
+      <list v-for="list in lists" :key="list.id" :list="list" />
     </div>
   </div>
 </template>
 
 <script>
+import List from "@/components/ListsComponent.vue";
 export default {
   name: "board",
   mounted() {
@@ -40,6 +32,10 @@ export default {
       return this.$store.state.activeBoard;
     }
   },
-  props: ["boardId"]
+  props: ["boardId"],
+
+  components: {
+    List
+  }
 };
 </script>

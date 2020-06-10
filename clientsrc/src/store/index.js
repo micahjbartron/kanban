@@ -1,18 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
-import router from '../router/index'
+import api from './AxiosService';
+import { BoardsStore } from "./BoardsStore"
 
 Vue.use(Vuex)
 
 //Allows axios to work locally or live
-let base = window.location.host.includes('localhost') ? '//localhost:3000/' : '/'
 
-let api = Axios.create({
-  baseURL: base + "api/",
-  timeout: 3000,
-  withCredentials: true
-})
 
 export default new Vuex.Store({
   state: {
@@ -26,8 +21,13 @@ export default new Vuex.Store({
     },
     setBoards(state, boards) {
       state.boards = boards
+    },
+    setActiveBoard(state, activeBoard) {
+      state.activeBoard = activeBoard
     }
   },
+
+
   actions: {
     //#region -- AUTH STUFF --
     setBearer({ }, bearer) {
@@ -44,29 +44,10 @@ export default new Vuex.Store({
         console.error(err)
       }
     },
-    //#endregion
 
-
-    //#region -- BOARDS --
-    getBoards({ commit, dispatch }) {
-      api.get('boards')
-        .then(res => {
-          commit('setBoards', res.data)
-        })
-    },
-    addBoard({ commit, dispatch }, boardData) {
-      api.post('boards', boardData)
-        .then(serverBoard => {
-          dispatch('getBoards')
-        })
-    }
-    //#endregion
-
-
-    //#region -- LISTS --
-
-
-
-    //#endregion
+  },
+  modules: {
+    BoardsStore,
   }
+
 })

@@ -1,5 +1,6 @@
 <template>
   <div class="board">
+    <div></div>
     <h1 v-if="board.title">{{board.title}}</h1>
     <h1 v-else>Loading...</h1>
   </div>
@@ -8,6 +9,10 @@
 <script>
 export default {
   name: "board",
+  mounted() {
+    this.$store.dispatch("getActiveBoard", this.$route.params.id);
+    this.$store.dispatch("getprofile");
+  },
   computed: {
     board() {
       //FIXME This does not work on page reload because the activeBoard is empty in the store

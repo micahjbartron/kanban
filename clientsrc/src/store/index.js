@@ -25,6 +25,9 @@ export default new Vuex.Store({
     },
     setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
+    },
+    setLists(state, lists) {
+      state.lists = lists
     }
   },
 

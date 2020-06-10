@@ -28,10 +28,11 @@ export default {
   mounted() {
     this.$store.dispatch("getActiveBoard", this.$route.params.boardId);
     this.$store.dispatch("getProfile");
-    this.$store.dispatch("getListsByBoardId", this.$route.params.listId);
+    this.$store.dispatch("getListsByBoardId", this.$route.params.boardId);
   },
   computed: {
     lists() {
+      // debugger;
       return this.$store.state.lists;
     },
     board() {

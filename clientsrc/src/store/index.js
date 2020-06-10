@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import api from './AxiosService';
 import { BoardsStore } from "./BoardsStore"
+import { ListsStore } from "./ListsStore"
 
 Vue.use(Vuex)
 
@@ -52,6 +53,7 @@ export default new Vuex.Store({
   },
   modules: {
     BoardsStore,
+    ListsStore
   }
 
 })

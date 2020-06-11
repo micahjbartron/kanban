@@ -12,25 +12,19 @@ export const ListsStore = {
         console.error(error)
       }
     },
-    addList({ commit, dispatch }, listData) {
-      _api.post('lists', listData)
-        .then(serverList => {
-          dispatch('getListByBoardId')
-        })
-    },
-    async editList({ commit, dispatch }, editList) {
+    async addList({ commit, dispatch }, listData) {
       try {
-        let res = await _api.put('lists/' + editList.listId, editList);
-        //what would we need to dispatch here?
-        dispatch('getListsByBoardId', editList.listId)
+        let res = await _api.post('lists/', listData)
+        commit("addList", res.data)
       } catch (error) {
         console.error(error)
       }
     },
+
     async deleteList({ commit, dispatch }, id) {
       try {
         let res = await _api.delete('lists/' + id)
-        dispatch('getListsByBoardId')
+        commit('removeList', id)
       } catch (error) {
         console.error(error)
       }

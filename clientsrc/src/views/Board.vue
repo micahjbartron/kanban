@@ -2,11 +2,11 @@
   <div class="board container fluid">
     <div class="row">
       <div class="col">
-        <div></div>
         <h1 v-if="board.title">{{board.title}}</h1>
         <h1 v-else>Loading...</h1>
       </div>
     </div>
+    <!-- TODO create form for New List -->
     <div class="row">
       <list v-for="list in lists" :key="list.id" :list="list" />
     </div>
@@ -19,12 +19,18 @@ export default {
   name: "board",
   mounted() {
     this.$store.dispatch("getActiveBoard", this.$route.params.boardId);
-    this.$store.dispatch("getProfile");
     this.$store.dispatch("getListsByBoardId", this.$route.params.boardId);
+  },
+  data() {
+    return {
+      newList: {
+        title: "",
+        boardId: this.$route.params.boardId
+      }
+    };
   },
   computed: {
     lists() {
-      // debugger;
       return this.$store.state.lists;
     },
     board() {
@@ -32,7 +38,9 @@ export default {
       return this.$store.state.activeBoard;
     }
   },
-  props: ["boardId"],
+  methods: {
+    // TODO Make a new List method
+  },
 
   components: {
     List

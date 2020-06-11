@@ -9,18 +9,18 @@ export class CommentsController extends BaseController {
     super("api/comments")
     this.router
       .use(auth0provider.getAuthorizedUserInfo)
-      .get('', this.getAll)
+      //.get('', this.getAll)
       .post('', this.create)
-      .put('/:id', this.edit)
+      //.put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
-  async getAll(req, res, next) {
-    try {
-      let data = await commentService.getAll(req.userInfo.email)
-      return res.send(data)
-    }
-    catch (err) { next(err) }
-  }
+  // async getAll(req, res, next) {
+  //   try {
+  //     let data = await commentService.getAll(req.userInfo.email)
+  //     return res.send(data)
+  //   }
+  //   catch (err) { next(err) }
+  // }
 
   async create(req, res, next) {
     try {
@@ -29,12 +29,12 @@ export class CommentsController extends BaseController {
       return res.status(201).send(data)
     } catch (error) { next(error) }
   }
-  async edit(req, res, next) {
-    try {
-      let data = await commentService.edit(req.params.id, req.userInfo.email, req.body)
-      return res.send(data)
-    } catch (error) { next(error) }
-  }
+  // async edit(req, res, next) {
+  //   try {
+  //     let data = await commentService.edit(req.params.id, req.userInfo.email, req.body)
+  //     return res.send(data)
+  //   } catch (error) { next(error) }
+  // }
   async delete(req, res, next) {
     try {
       await commentService.delete(req.params.id, req.userInfo.email)

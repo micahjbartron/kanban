@@ -18,7 +18,7 @@ class ListService {
     return data
   }
   async find(query = {}) {
-    let list = await dbContext.Lists.find(query).populate("boards");
+    let list = await dbContext.Lists.find(query)
     return list
   }
 

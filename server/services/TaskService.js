@@ -18,8 +18,8 @@ class TaskService {
     let data = await dbContext.Tasks.create(rawData)
     return data
   }
-  async edit(id, userEmail, update) {
-    let data = await dbContext.Tasks.findOneAndUpdate({ _id: id, creatorEmail: userEmail }, update, { new: true })
+  async edit(update) {
+    let data = await dbContext.Tasks.findOneAndUpdate({ _id: update.id, creatorEmail: update.userEmail }, update, { new: true })
     if (!data) {
       throw new BadRequest("Invalid ID or you do not won this list")
     }

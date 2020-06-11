@@ -7,6 +7,8 @@
       <button type="submit">Create Board</button>
     </form>
     <div v-for="board in boards" :key="board.id">
+      <button @click="deleteBoard" class="btn btn-outline-danger">delete</button>
+      <!-- TODO Add a button to delete @click and pass the board.id -->
       <router-link :to="{name: 'board', params: {boardId: board.id}}">Title- {{board.title}}</router-link>
     </div>
   </div>
@@ -35,7 +37,12 @@ export default {
     addBoard() {
       this.$store.dispatch("addBoard", this.newBoard);
       this.newBoard = { title: "", description: "" };
+    },
+    deleteBoard() {
+      this.$store.dispatch("deleteBoard", this.boardId);
+      debugger;
     }
+    // TODO add method to delete that takes in boardId
   }
 };
 </script>

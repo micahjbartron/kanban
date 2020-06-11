@@ -5,6 +5,7 @@ import api from './AxiosService';
 import { BoardsStore } from "./BoardsStore"
 import { ListsStore } from "./ListsStore"
 import { TasksStore } from "./TasksStore"
+import { CommentsStore } from "./CommentsStore"
 
 Vue.use(Vuex)
 
@@ -32,7 +33,14 @@ export default new Vuex.Store({
     setLists(state, lists) {
       state.lists = lists
     },
+    addList(state, list) {
+      state.lists.push(list)
+    },
+    removeList(state, id) {
+      state.lists = state.lists.filter(l => l.id != id)
+    },
     setTasks(state, tasks) {
+      // REVIEW this wont work
       state.tasks = tasks
     },
     updateLists(state, lists) {
@@ -62,7 +70,8 @@ export default new Vuex.Store({
   modules: {
     BoardsStore,
     ListsStore,
-    TasksStore
+    TasksStore,
+    CommentsStore
   }
 
 })

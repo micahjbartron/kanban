@@ -11,11 +11,14 @@ export const CommentsStore = {
         console.error(error)
       }
     },
-    addComment({ commit, dispatch }, listData) {
-      _api.post('comments', listData)
-        .then(serverList => {
-          dispatch('getCommentByTaskId')
-        })
+    async addComment({ commit, dispatch }, payload) {
+      try {
+        let res = await _api.post('tasks/', payload)
+        commit("addComment", res.data)
+        // TODO lets chat when here
+      } catch (error) {
+        console.error(error)
+      }
     },
     async editComment({ commit, dispatch }, editComment) {
       try {

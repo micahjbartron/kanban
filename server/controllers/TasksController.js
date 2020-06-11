@@ -9,26 +9,26 @@ export class TasksController extends BaseController {
     super("api/tasks")
     this.router
       .use(auth0provider.getAuthorizedUserInfo)
-      .get('', this.getAll)
-      .get('/:id', this.getById)
+      // .get('', this.getAll)
+      //.get('/:id', this.getById)
       .get('/:id/comments', this.getCommentByTaskId)
       .post('', this.create)
       .put('/:id', this.edit)
       .delete('/:id', this.delete)
   }
-  async getAll(req, res, next) {
-    try {
-      let data = await taskService.getAll(req.userInfo.email)
-      return res.send(data)
-    }
-    catch (err) { next(err) }
-  }
-  async getById(req, res, next) {
-    try {
-      let data = await taskService.getById(req.params.id);
-      return res.send(data)
-    } catch (error) { next(error) }
-  }
+  // async getAll(req, res, next) {
+  //   try {
+  //     let data = await taskService.getAll(req.userInfo.email)
+  //     return res.send(data)
+  //   }
+  //   catch (err) { next(err) }
+  // }
+  // async getById(req, res, next) {
+  //   try {
+  //     let data = await taskService.getById(req.params.id);
+  //     return res.send(data)
+  //   } catch (error) { next(error) }
+  // }
   async getCommentByTaskId(req, res, next) {
     try {
       let data = await commentService.find({ taskId: req.params.id })
@@ -44,7 +44,8 @@ export class TasksController extends BaseController {
   }
   async edit(req, res, next) {
     try {
-      let data = await taskService.edit(req.params.id, req.userInfo.email, req.body)
+      let update = { id: req.params.id, creatorEmail: req.userInfo.email, listId: req.body.listId }
+      let data = await taskService.edit(update)
       return res.send(data)
     } catch (error) { next(error) }
   }

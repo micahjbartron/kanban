@@ -6,6 +6,11 @@
         <h1 v-else>Loading...</h1>
       </div>
     </div>
+    <form @submit.prevent="addList">
+      <input type="text" placeholder="List Name" v-model="newList.title" required />
+
+      <button type="submit">Create List</button>
+    </form>
     <!-- TODO create form for New List -->
     <div class="row">
       <list v-for="list in lists" :key="list.id" :list="list" />
@@ -39,7 +44,11 @@ export default {
     }
   },
   methods: {
-    // TODO Make a new List method
+    addList() {
+      this.$store.dispatch("addList", this.newList);
+      debugger;
+      this.newTitle = { title: "", boardId: "" };
+    }
   },
 
   components: {

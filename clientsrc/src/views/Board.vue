@@ -46,8 +46,8 @@ export default {
   methods: {
     addList() {
       this.$store.dispatch("addList", this.newList);
-      debugger;
-      this.newTitle = { title: "", boardId: "" };
+
+      this.newList = { title: "", boardId: "" };
     }
   },
 

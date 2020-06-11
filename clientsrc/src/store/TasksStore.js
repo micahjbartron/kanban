@@ -3,11 +3,10 @@ import _api from "./AxiosService"
 export const TasksStore = {
 
   actions: {
-    async getTasksByListId({ commit, dispatch }, id) {
+    async getTasksByListId({ commit, dispatch }, listId) {
       try {
-        let res = await _api.get('lists/' + id + '/tasks')
-        commit("setTasks", res.data)
-        // TODO chat about this when it breaks
+        let res = await _api.get('lists/' + listId + '/tasks')
+        commit("setTasks", { listId, tasks: res.data })
       } catch (error) {
         console.error(error)
       }

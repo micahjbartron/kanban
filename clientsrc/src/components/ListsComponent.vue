@@ -1,10 +1,21 @@
 <template>
   <div class="col-4 my-2">
     <div class="card" style="width: 18rem;">
-      <div class="card-header">{{list.title}}</div>
-      <!-- TODO v-for task in tasks -->
-      <task v-for="task in tasks" :key="task.id" :task="task" />
-      <button class="btn btn-outline-danger text light" @click="deleteList(list.id)">X</button>
+      <div class="card-header">
+        {{list.title}}
+        <button
+          class="btn btn-outline-danger text light ml-5"
+          @click="deleteList(list.id)"
+        >X</button>
+      </div>
+      <form @submit.prevent="addTask(list.id)" action="submit">
+        <input type="text" placeholder="Task" v-model="newTask.title" required />
+        <button type="submit" class="btn btn-outline-success">Add</button>
+      </form>
+      <div>
+        <task v-for="task in tasks" :key="task.id" :task="task" />
+      </div>
+
       <!-- TODO delete button for list -->
     </div>
   </div>
@@ -16,10 +27,34 @@ import Task from "@/components/TasksComponent.vue";
 export default {
   name: "Lists",
   props: ["list"],
+
+  data() {
+    return {
+      newTask: {
+        title: "",
+        listId: this.list.id
+      }
+    };
+  },
   methods: {
     deleteList(id) {
       this.$store.dispatch("deleteList", id);
-      debugger;
+    },
+    addTask() {
+      this.$store.dispatch("addTask", this.newTask);
+
+      this.newTask = {
+        title: "",
+        listId: this.list.id
+      };
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getTasksByListId", this.list.id);
+  },
+  computed: {
+    tasks() {
+      return this.$store.state.tasks[this.list.id];
     }
   },
   components: {

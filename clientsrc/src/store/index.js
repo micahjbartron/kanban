@@ -18,7 +18,7 @@ export default new Vuex.Store({
     boards: [],
     activeBoard: {},
     lists: [],
-    tasks: []
+    tasks: {}
   },
   mutations: {
     setUser(state, user) {
@@ -39,12 +39,18 @@ export default new Vuex.Store({
     removeList(state, id) {
       state.lists = state.lists.filter(l => l.id != id)
     },
-    setTasks(state, tasks) {
+
+    setTasks(state, payload) {
       // REVIEW this wont work
-      state.tasks = tasks
+      //state.tasks[payload.listId] = payload.tasks
+      Vue.set(state.tasks, payload.listId, payload.tasks)
     },
     updateLists(state, lists) {
       state.lists = lists
+    },
+    addTask(state, payload) {
+
+      state.tasks[payload.listId].push(payload)
     }
   },
 

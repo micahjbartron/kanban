@@ -1,7 +1,10 @@
 <template>
   <div class="component">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{task.title}}</li>
+      <li class="list-group-item">
+        {{task.title}}
+        <button @click="deleteTask" class="btn btn-outline-danger">X</button>
+      </li>
     </ul>
   </div>
 </template>
@@ -14,8 +17,12 @@ export default {
   data() {
     return {};
   },
-  computed: {},
-  methods: {},
+
+  methods: {
+    deleteTask(id) {
+      this.$store.dispatch("deleteTask", id);
+    }
+  },
   components: {}
 };
 </script>

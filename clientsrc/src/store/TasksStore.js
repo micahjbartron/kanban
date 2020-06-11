@@ -28,11 +28,11 @@ export const TasksStore = {
         console.error(error)
       }
     },
-    async deleteTask({ commit, dispatch }, task) {
+    async deleteTask({ commit, dispatch }, id) {
       //update this to be the full task
       try {
-        let res = await _api.delete('tasks/' + task.id)
-        commit("deleteTask", task)
+        let res = await _api.delete('tasks/' + id)
+        commit("removeTask", id)
       } catch (error) {
         console.error(error)
       }

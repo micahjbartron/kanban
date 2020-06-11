@@ -51,6 +51,9 @@ export default new Vuex.Store({
     addTask(state, payload) {
 
       state.tasks[payload.listId].push(payload)
+    },
+    removeTask(state, id) {
+      state.tasks[id].delete(t => t.id != id)
     }
   },
 

@@ -3,7 +3,8 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
         {{task.title}}
-        <button @click="deleteTask" class="btn btn-outline-danger">X</button>
+        <button @click="deleteTask(task.id)" class="btn btn-outline-danger">X</button>
+        <comment v-for="comment in comments" :key="comment.id" :comment="comment" />
       </li>
     </ul>
   </div>
@@ -11,6 +12,7 @@
 
 
 <script>
+import Comment from "@/components/CommentsComponent.vue";
 export default {
   name: "Tasks",
   props: ["task"],
@@ -23,7 +25,9 @@ export default {
       this.$store.dispatch("deleteTask", id);
     }
   },
-  components: {}
+  components: {
+    Comment
+  }
 };
 </script>
 

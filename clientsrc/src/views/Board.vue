@@ -6,11 +6,15 @@
         <h1 v-else>Loading...</h1>
       </div>
     </div>
-    <form @submit.prevent="addList">
-      <input type="text" placeholder="List Name" v-model="newList.title" required />
+    <div class="row">
+      <div class="col">
+        <form @submit.prevent="addList">
+          <input type="text" placeholder="List Name" v-model="newList.title" required />
+          <button type="submit">Create List</button>
+        </form>
+      </div>
+    </div>
 
-      <button type="submit">Create List</button>
-    </form>
     <!-- TODO create form for New List -->
     <div class="row">
       <list v-for="list in lists" :key="list.id" :list="list" />

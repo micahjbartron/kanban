@@ -18,7 +18,8 @@ export default new Vuex.Store({
     boards: [],
     activeBoard: {},
     lists: [],
-    tasks: {}
+    tasks: {},
+    comments: {}
   },
   mutations: {
     setUser(state, user) {
@@ -54,7 +55,15 @@ export default new Vuex.Store({
     },
     removeTask(state, id) {
       state.tasks[id].delete(t => t.id != id)
+    },
+    addComment(state, payload) {
+
+      state.comments[payload.taskId].push(payload)
+    },
+    setComments(state, payload) {
+      Vue.set(state.comments, payload.taskId, payload.comments)
     }
+
   },
 
 

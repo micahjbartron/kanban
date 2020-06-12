@@ -3,17 +3,17 @@ import _api from "./AxiosService"
 
 export const CommentsStore = {
   actions: {
-    async getCommentsByTaskId({ commit, dispatch }, id) {
+    async getCommentsByTaskId({ commit, dispatch }, taskId) {
       try {
-        let res = await _api.get('tasks/' + id + '/comments')
-        commit("setComments", res.data)
+        let res = await _api.get('tasks/' + taskId + '/comments')
+        commit("setComments", { taskId, comments: res.data })
       } catch (error) {
         console.error(error)
       }
     },
     async addComment({ commit, dispatch }, payload) {
       try {
-        let res = await _api.post('tasks/', payload)
+        let res = await _api.post('comments/', payload)
         commit("addComment", res.data)
         // TODO lets chat when here
       } catch (error) {

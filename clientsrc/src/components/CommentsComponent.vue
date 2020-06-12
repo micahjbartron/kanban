@@ -2,8 +2,8 @@
   <div class="component">
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        {{comment.body}}
-        <button @click="deleteComment" class="btn btn-outline-danger">X</button>
+        {{comment.title}}
+        <button @click="deleteComment(comment.id)" class="btn btn-outline-danger">x</button>
       </li>
     </ul>
   </div>
@@ -18,7 +18,11 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    deleteComment(id) {
+      this.$store.dispatch("deleteComment", id);
+    }
+  },
   components: {}
 };
 </script>
